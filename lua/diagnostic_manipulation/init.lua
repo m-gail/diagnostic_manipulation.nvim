@@ -2,8 +2,9 @@ local M = {}
 
 local old_set
 
-local function filter_diagnostics(diagnostics)
+local function filter_diagnostics(diagnostics, bufnr)
     return vim.tbl_filter(function (diagnostic)
+        diagnostic.bufnr = bufnr
         for _, whitelist in pairs(M.config.whitelist) do
             if (whitelist(diagnostic)) then
                 return true
@@ -24,7 +25,7 @@ function M.setup(config)
     M.config = vim.tbl_deep_extend("force", { whitelist = {}, blacklist = {}}, config)
     old_set = vim.diagnostic.set
     vim.diagnostic.set = function (namespace, bufnr, diagnostics, opts)
-        old_set(namespace, bufnr, filter_diagnostics(diagnostics), opts)
+        old_set(namespace, bufnr, filter_diagnostics(diagnostics, bufnr), opts)
     end
 end
 
