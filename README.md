@@ -15,7 +15,7 @@ This example will remove the unused variable diagnostic provided by tsserver.
         init = function ()
             require("diagnostic_manipulation").setup {
                 blacklist = {
-                    require("diagnostic_manipulation.builtin.tsserver").filter_tsserver_codes({ 6133, 6196 })
+                    require("diagnostic_manipulation.builtin.tsserver").tsserver_codes({ 6133, 6196 })
                 },
                 whitelist = {
                     -- Your whitelist here
